@@ -15,7 +15,13 @@ print("|" + " " * 9 + "[4] ELIMINAR ALUMNO  " + " "* 18 + "|")
 print("|" + " " * 9 + "[5] SALIR            " + " "* 18 + "|")
 print("-" * 50)
 opcion = 0
-alumnos = [{'nombre':'cesar mayta','email':'cesarmayta@gmail.com','celular':'232323'}]
+alumnos = [{'nombre':'cesar mayta',
+            'email':'cesarmayta@gmail.com',
+            'celular':'232323'},
+            {'nombre':'aldo',
+            'email':'aldo@gmail.com',
+            'celular':'1233456'}
+            ]
 while(opcion != 5):
     opcion = int(input("INGRESE OPCIÓN DEL MENU :"))
     if(opcion == 1):
@@ -30,16 +36,41 @@ while(opcion != 5):
         }
         alumnos.append(dictAlumno)
         print("ALUMNO REGISTRADO CON EXITO!!!")
+
+
     elif(opcion == 2):
         print("RELACIÓN DE ALUMNOS")
         cabeceras = alumnos[0].keys()
         registros = [x.values() for x in alumnos]
         print(tabulate.tabulate(registros,cabeceras))
+
+
     elif(opcion == 3):
         print("ACTUALIZAR ALUMNO")
+        nombreCambio = input("Ingrese el nombre del alumno a cambiar: ")
+        cambio = input("Que key cambiar: ")
+        cambioValue = input("Ingrese el valor: ")
+        for i in range(len(alumnos)):
+            dic = alumnos[i]
+            if dic["nombre"] == nombreCambio:
+                for key, value in dic.items():
+                    if key == cambio:
+                        dic[key] = cambioValue
+
+
     elif(opcion == 4):
         print("ELIMINAR ALUMNO")
+        nombreEliminar = input("Ingrese el nombre del alumno a eliminar: ")
+        for i in range(len(alumnos)):
+            dic = alumnos[i]
+            if dic["nombre"] == nombreEliminar:
+                alumnos.remove(dic)
+
+
     elif(opcion == 5):
         print("FINALIZANDO PROGRAMA")
+
+
     else:
         print("OPCION INCORRECTA")
+    
