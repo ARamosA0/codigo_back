@@ -1,6 +1,8 @@
 from flask import Flask
 
-#importamos Blueprints
+from flask_bootstrap import Bootstrap
+
+#importamos blueprints
 from .admin import admin
 from .portafolio import portafolio
 
@@ -10,10 +12,10 @@ from .config import Config
 def create_app():
     app = Flask(__name__)
 
-    # Agregamos el Blueprint al proyecto principal
+    bootstrap = Bootstrap(app)
+    app.config.from_object(Config)
+
     app.register_blueprint(admin)
     app.register_blueprint(portafolio)
     
     return app
-
-

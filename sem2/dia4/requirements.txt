@@ -1,5 +1,14 @@
-
 #pip install -r requirements.txt
 flask
 firebase_admin
-python-dotenv 
+python-dotenv
+
+#Extenciones de Flask
+
+flask-bootstrap  #integra bootstrap con flask
+Flask_WTF  #what the form
+pyrebase4
+
+
+
+

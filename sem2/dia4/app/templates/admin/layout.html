@@ -1,0 +1,20 @@
+{% extends 'bootstrap/base.html' %}
+{% block head %}
+    {{ super() }}
+    <title>Panel de Adminstracion</title>
+{% endblock %}
+{% block body %}
+    {% for message in get_flashed_messages() %}
+        <div class="alter alter-danger alert dismissible">
+            <button class="alert alert-danger alert dismissible"
+                    >
+
+            </button>
+        </div>
+    {% endfor %}
+    {% block content %}
+    {% endblock %}
+    {% block scripts %}
+        {{ super() }}
+    {% endblock %}
+{% endblock %}

@@ -1,106 +1,94 @@
-from multiprocessing import context
-from flask import Flask, render_template, request
-import requests
+from flask import Flask,render_template,request,session
+#import requests
+
+#URL = 'https://api.github.com/users/cesarmayta'
 
 
-URL = 'https://api.github.com/users/ARamosA0'
-
-
+## para conectarse a firebase
 import firebase_admin
 from firebase_admin import credentials
 
-cred = credentials.Certificate("../credentials/token.json")
+cred = credentials.Certificate("token.json")
 firebase_admin.initialize_app(cred)
 
-# Para conectarse a firestore
-
+### para conectarse a firestore
 from firebase_admin import firestore
 
 db = firestore.client()
 
 app = Flask(__name__)
 
+#creamos una clave secreta para las variables de sesión
+app.secret_key = 'qwerty123456'
+
 @app.route('/')
-def home():
-    #return '<center><h1>Bienvenido a mi sitio Web</h1></center>'
+def index():
+    #return '<center><H1>BIENVENIDO A MI SITIO WEB</H1></center>'
+    #recuperamos la info de la biografia
     colBiografia = db.collection('biografia')
     docBiografia = colBiografia.get()
 
-    colEnlaces = db.collection('enlaces')
-    docEnlaces = colEnlaces.get()
-    lstEnlaces = []
-    for doc in docEnlaces:
-        dicEnlaces = doc.to_dict()
-        lstEnlaces.append(dicEnlaces)
-
     for doc in docBiografia:
         dicBiografia = doc.to_dict()
-    context = {
-        'biografia': dicBiografia,
-        'enlaces': lstEnlaces
-    }
-    return render_template('home.html', **context)
+
+    session['biografia'] = dicBiografia
+
+    #recuperamos la info de los enlaces
+    colEnlaces = db.collection('enlaces')
+    docEnlaces = colEnlaces.get()
+
+    lstEnlaces = []
+    for doc in docEnlaces:
+        dicEnlace = doc.to_dict()
+        lstEnlaces.append(dicEnlace)
+
+    session['enlaces'] = lstEnlaces
+
+
+    #data = requests.get(URL)
+
+    #nombre = request.args.get('nombre','')
+    #context = data.json()
+    #print(context)
+
+    return render_template('home.html')
 
 @app.route('/peliculas')
 def peliculas():
-    listaPeliculas = ['CODA', 'ENCANTO', 'SONIC 2']
-    nombre = request.args.get('nombre','no hay nombre')
-    context ={
-        'peliculas':listaPeliculas,
-        'nombre': nombre
+    listaPeliculas = ['CODA','ENCANTO','SONIC 2']
+
+    nombre = request.args.get('nombre','')
+
+    context = {
+        'nombre':nombre,
+        'peliculas':listaPeliculas
     }
-    return render_template('peliculas.html', **context)
+    return render_template('peliculas.html',**context)
 
-######################### RUTAS DE MIS PAGINAS
-
+############### RUTAS DE MIS PAGINAS
 @app.route('/acercade')
 def about():
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
-
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
-    context = {
-        'biografia': dicBiografia
-    }
-    return render_template('acercade.html', **context)
-
+    return render_template('acercade.html')
 
 @app.route('/portafolio')
 def portafolio():
     colProyectos = db.collection('proyectos')
     docProyectos = colProyectos.get()
 
-    #print(docProyectos)
-
     lstProyectos = []
     for doc in docProyectos:
         print(doc.to_dict())
         dicProyecto = doc.to_dict()
         lstProyectos.append(dicProyecto)
-    
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
 
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
 
     context = {
-        'proyectos':lstProyectos,
-        'biografia': dicBiografia
+        'proyectos':lstProyectos
     }
-    return render_template('portafolio.html', **context)
+    return render_template('portafolio.html',**context)
 
 @app.route('/contacto')
 def contacto():
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
-
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
-    context = {
-        'biografia': dicBiografia
-    }
-    return render_template('contacto.html', **context)
+    return render_template('contacto.html')
 
 app.run(debug=True)

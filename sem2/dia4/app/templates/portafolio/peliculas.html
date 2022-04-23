@@ -1,10 +1,8 @@
-{% extends 'portafolio.index.html' %}
+{% extends 'index.html' %}
 {% block content %}
-
     <ul>
         {% for peli in peliculas %}
-          <li>{{peli}}</li>
+        <li>{{peli}}</li>
         {% endfor %}
     </ul>
-
 {% endblock %}
