@@ -2,17 +2,7 @@ from flask import Flask,render_template,request,session
 
 from . import portafolio
 
-## para conectarse a firebase
-import firebase_admin
-from firebase_admin import credentials
-
-cred = credentials.Certificate("token.json")
-firebase_admin.initialize_app(cred)
-
-### para conectarse a firestore
-from firebase_admin import firestore
-
-db = firestore.client()
+from app.firebaseAdmin import db
 
 
 @portafolio.route('/')
@@ -22,7 +12,8 @@ def home():
 
     for doc in docBiografia:
         dicBiografia = doc.to_dict()
-
+        print(dicBiografia)
+        
     session['biografia'] = dicBiografia
 
     #recuperamos la info de los enlaces
@@ -37,53 +28,29 @@ def home():
     session['enlaces'] = lstEnlaces
     return render_template('portafolio/home.html')
 
+############### RUTAS DE MIS PAGINAS
 @portafolio.route('/acercade')
 def about():
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
-
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
-    context = {
-        'biografia': dicBiografia
-    }
-    return render_template('portafolio/acercade.html', **context)
-
+    return render_template('portafolio/acercade.html')
 
 @portafolio.route('/proyectos')
 def proyectos():
     colProyectos = db.collection('proyectos')
     docProyectos = colProyectos.get()
 
-    #print(docProyectos)
-
     lstProyectos = []
     for doc in docProyectos:
         print(doc.to_dict())
         dicProyecto = doc.to_dict()
         lstProyectos.append(dicProyecto)
-    
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
 
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
 
     context = {
-        'proyectos':lstProyectos,
-        'biografia': dicBiografia
+        'proyectos':lstProyectos
     }
-    return render_template('portafolio/portafolio.html', **context)
+    return render_template('portafolio/portafolio.html',**context)
 
 @portafolio.route('/contacto')
 def contacto():
-    colBiografia = db.collection('biografia')
-    docBiografia = colBiografia.get()
-
-    for doc in docBiografia:
-        dicBiografia = doc.to_dict()
-    context = {
-        'biografia': dicBiografia
-    }
-    return render_template('portafolio/contacto.html', **context)
+    return render_template('portafolio/contacto.html')
 
