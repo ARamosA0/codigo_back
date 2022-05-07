@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'web',
+    "django_static_ionicons",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
