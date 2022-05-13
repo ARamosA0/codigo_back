@@ -1,5 +1,0 @@
-django-admin startproject [nombre del proyecto] => Inicia un proyecto nuevo
-
-pytyhon manage.py runserver => Inicia el servidor de django
-
-python manage.py startapp [nombre de la app] => crea la aplicacion con views, test, models, apps, admin
