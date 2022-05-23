@@ -1,0 +1,31 @@
+COMANDOS PARA MONGO DB
+
+1) mongo
+    inicia el servidor y el mongo shell
+2) show dbs
+    muestra las bases de datos
+3) use cursos
+    crea una base de datos llamada cursos
+4) db.alumnos.insertOne({nombre:'tunombre',email:'tuemail'});
+    crea un documento dentro de la colección llamada alumnos
+5) db.alumnos.find().pretty()
+    muestra los documentos de la colección alumnos
+
+    https://www.mongodb.com/docs/manual/crud/
+
+db.alumnos.insertMany([{},{},{}])
+
+db.alumnos.insertMany([{nombre:"laura pacheco",email:"laura@gmail.com",nota:20},{nombre:"jose lopez",email:"jose@hotmail.com",nota:10},{nombre:"Ana Rivera",email:"anita@hotmail.com",nota:15}]);
+db.alumnos.updateOne({"nombre":"cesar mayta"},{$set: {nota:11}});
+db.alumnos.updateOne({nombre:"Ana Rivera"},{$set:{email:"anarivera@claro.com.pe"}});
+db.alumnos.updateOne({_id : ObjectId("6286f5c57b00cbeb4b6a1dca")},{$set:{nombre:"Luis Madrigal",email:"luis@yahoo.com",nota:9}});
+db.alumnos.deleteOne({"_id" : ObjectId("6286f5c57b00cbeb4b6a1dcb")});
+
+
+"QUERIES"
+https://www.mongodb.com/docs/manual/tutorial/query-documents/ 
+
+"COMPARACIONES"
+https://www.mongodb.com/docs/manual/reference/operator/query-comparison/#std-label-query-selectors-comparison
+
+

@@ -1,0 +1,29 @@
+[{
+    "fecha": "2020-05-18T14:10:30.000Z",
+    "alumno": {
+        "codigo": 1,
+        "nombre": "Aldo Ramos"
+    },
+    "nivel": {
+        "nombre": "basico"
+    },
+    "modulo": {
+        "nombre": "backend"
+    },
+    "cursos": [{
+            "_id": 1,
+            "nombre": "python",
+            "nota": 0
+        },
+        {
+            "_id": 2,
+            "nombre": "flask",
+            "nota": 10
+        },
+        {
+            "_id": 3,
+            "nombre": "django",
+            "nota": 20
+        }
+    ]
+}]
